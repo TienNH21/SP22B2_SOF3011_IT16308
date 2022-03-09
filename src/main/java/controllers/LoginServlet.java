@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/HelloServlet")
-public class HelloServlet extends HttpServlet {
+@WebServlet("/login")
+public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public HelloServlet() {
+    public LoginServlet() {
         super();
     }
 
@@ -19,16 +19,16 @@ public class HelloServlet extends HttpServlet {
 		HttpServletRequest request,
 		HttpServletResponse response
 	) throws ServletException, IOException {
-		String name = request.getParameter("ho_ten");
-		request.setAttribute("name", name);
-		request.getRequestDispatcher("/views/welcome.jsp")
-		.forward(request, response);
+		request.getRequestDispatcher("/views/login.jsp")
+			.forward(request, response);
 	}
 
 	protected void doPost(
 		HttpServletRequest request,
 		HttpServletResponse response
 	) throws ServletException, IOException {
-		doGet(request, response);
+		String email = request.getParameter("email"),
+			pwd = request.getParameter("password");
+		System.out.println(email + "-" + pwd);
 	}
 }
