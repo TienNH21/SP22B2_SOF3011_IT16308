@@ -22,7 +22,8 @@ public class RegisterServlet extends HttpServlet {
 		HttpServletRequest request,
 		HttpServletResponse response
 	) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/register.jsp")
+		request.setAttribute("view", "/views/register.jsp");
+		request.getRequestDispatcher("/views/layout.jsp")
 			.forward(request, response);
 	}
 
