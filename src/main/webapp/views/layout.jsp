@@ -51,7 +51,7 @@
 	<!-- Body -->
 	<div class="row">
 		<div class="col-2">Sidebar</div>
-		<div class="col-10 bg-primary" style="height: 200px;">
+		<div class="col-10">
 			<jsp:include page="${ view }"></jsp:include>
 		</div>
 	</div>
