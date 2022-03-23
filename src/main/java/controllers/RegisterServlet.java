@@ -10,12 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.beanutils.BeanUtils;
 
 import beans.form_data.RegisterData;
+import dao.UserDAO;
+import entities.User;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+	private UserDAO userDAO;
+
     public RegisterServlet() {
         super();
+        
+        this.userDAO = new UserDAO();
     }
 
 	protected void doGet(
@@ -31,20 +36,13 @@ public class RegisterServlet extends HttpServlet {
 		HttpServletRequest request,
 		HttpServletResponse response
 	) throws ServletException, IOException {
-		// BeanUtils
-		// request.getParameterValues
-		// request.getParameterMap
-		RegisterData bean = new RegisterData();
+		User entity = new User();
 		try {
-			BeanUtils.populate(bean, request.getParameterMap());
+			BeanUtils.populate(entity, request.getParameterMap());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		System.out.println(bean.getFullname());
-		System.out.println(bean.getEmail());
-		System.out.println(bean.getGioiTinh());
-		System.out.println(bean.getLoaiKH());
+		this.userDAO.create(entity);
 	}
-
 }

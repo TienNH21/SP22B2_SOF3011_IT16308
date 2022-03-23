@@ -11,14 +11,7 @@
 		action="/SP22B2_SOF3011_IT16308/register">
 		<div>
 			<label>Họ tên</label>
-			<input type="text" name="fullname" />
-		</div>
-		<div>
-			<label>Giới tính</label>
-			<input type="radio" name="gioiTinh" value="1" />
-			<label>Nam</label>
-			<input type="radio" name="gioiTinh" value="0" />
-			<label>Nữ</label>
+			<input type="text" name="hoTen" />
 		</div>
 		<div>
 			<label>Địa chỉ</label>
@@ -35,13 +28,6 @@
 		<div>
 			<label>SĐT</label>
 			<input type="text" name="sdt" />
-		</div>
-		<div>
-			<label>Loại Khách hàng</label>
-			<select name="loaiKH">
-				<option value="0">Thường</option>
-				<option value="1">VIP</option>
-			</select>
 		</div>
 		<div>
 			<button>Đăng ký</button>
