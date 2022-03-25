@@ -10,7 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import beans.form_data.RegisterData;
+import dao.UserDAO;
+import entities.User;
 
 @WebServlet({
 	"/users/index",    // GET
@@ -21,8 +25,11 @@ import beans.form_data.RegisterData;
 	"/users/delete",   // GET
 })
 public class QLUserServlert extends HttpServlet {
+	private UserDAO userDAO;
+
     public QLUserServlert() {
         super();
+        this.userDAO = new UserDAO();
     }
 
 	protected void doGet(
@@ -49,7 +56,7 @@ public class QLUserServlert extends HttpServlet {
 		String uri = request.getRequestURI();
 		
 		if (uri.contains("store")) {
-//			this.store(request, response);
+			this.store(request, response);
 		} else if (uri.contains("update")) {
 //			this.update(request, response);
 		}
@@ -59,18 +66,7 @@ public class QLUserServlert extends HttpServlet {
 		HttpServletRequest request,
 		HttpServletResponse response
 	) throws ServletException, IOException {
-		List<RegisterData> ds = new ArrayList<RegisterData>();
-		
-		RegisterData o1 = new RegisterData("Ng Van A", 
-			"HN", "a@gmail.com", "123456", "0123", 1, 0),
-			o2 = new RegisterData("Ng Van B", "HN",
-				"a@gmail.com", "123456", "0123", 1, 0),
-			o3 = new RegisterData("Ng Thi C", "HN",
-					"a@gmail.com", "123456", "0123", 0, 0);
-		
-		ds.add(o1);
-		ds.add(o2);
-		ds.add(o3);
+		List<User> ds = this.userDAO.all();
 		
 		request.setAttribute("ds", ds);
 		request.setAttribute("view",
@@ -82,8 +78,11 @@ public class QLUserServlert extends HttpServlet {
 	private void create(
 		HttpServletRequest request,
 		HttpServletResponse response
-	) {
-		//
+	) throws ServletException, IOException {
+		request.setAttribute("view",
+			"/views/admin/users/create.jsp");
+		request.getRequestDispatcher("/views/layout.jsp")
+		.forward(request, response);
 	}
 	
 	private void edit(
@@ -96,7 +95,29 @@ public class QLUserServlert extends HttpServlet {
 	private void delete(
 		HttpServletRequest request,
 		HttpServletResponse response
+	) throws IOException {
+		int id = Integer.parseInt( request.getParameter("id") );
+		User entity = this.userDAO.findById(id);
+		this.userDAO.delete(entity);
+
+		response.sendRedirect("/SP22B2_SOF3011_IT16308/users/index");
+	}
+
+	private void store(
+		HttpServletRequest request,
+		HttpServletResponse response
 	) {
-		//
+		try {
+			User entity = new User();
+			BeanUtils.populate(entity,
+				request.getParameterMap());
+			
+			this.userDAO.create(entity);
+			
+			response.sendRedirect("/SP22B2_SOF3011_IT16308"
+				+ "/users/index");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

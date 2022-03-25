@@ -6,6 +6,9 @@
 	<p class="alert alert-warning">Không có dữ liệu</p>
 </c:if>
 
+<a class="btn btn-success"
+	href="/SP22B2_SOF3011_IT16308/users/create">Thêm mới</a>
+
 <c:if test="${ !empty ds }">
 	<table class="table">
 		<thead>
@@ -13,24 +16,26 @@
 			<th>Địa chỉ</th>
 			<th>SĐT</th>
 			<th>Email</th>
-			<th>Giới tính</th>
-			<th>Loại KH</th>
+			<th colspan="2">Thao tác</th>
 		</thead>
 		<tbody>
 			<c:forEach items="${ ds }" var="obj">
 				<tr>
-					<td>${ obj.fullname }</td>
+					<td>${ obj.hoTen }</td>
 					<td>${ obj.diaChi }</td>
 					<td>${ obj.sdt }</td>
 					<td>${ obj.email }</td>
 					<td>
-						<c:choose>
-							<c:when test="${ obj.gioiTinh == 1 }">Nam</c:when>
-							<c:when test="${ obj.gioiTinh == 0 }">Nữ</c:when>
-							<c:otherwise> - </c:otherwise>
-						</c:choose>
+						<a class="btn btn-primary">Cập nhật</a>
 					</td>
-					<td>${ obj.loaiKH }</td>
+					<td>
+						<a
+							class="btn btn-danger"
+							href="/SP22B2_SOF3011_IT16308/users/delete?id=${ obj.id }"
+						>
+							Xóa
+						</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
