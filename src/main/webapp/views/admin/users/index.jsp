@@ -26,7 +26,9 @@
 					<td>${ obj.sdt }</td>
 					<td>${ obj.email }</td>
 					<td>
-						<a class="btn btn-primary">Cập nhật</a>
+						<a
+							href="/SP22B2_SOF3011_IT16308/users/edit?id=${ obj.id }"
+							class="btn btn-primary">Cập nhật</a>
 					</td>
 					<td>
 						<a

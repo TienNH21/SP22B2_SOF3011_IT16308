@@ -58,7 +58,7 @@ public class QLUserServlert extends HttpServlet {
 		if (uri.contains("store")) {
 			this.store(request, response);
 		} else if (uri.contains("update")) {
-//			this.update(request, response);
+			this.update(request, response);
 		}
 	}
 	
@@ -88,8 +88,14 @@ public class QLUserServlert extends HttpServlet {
 	private void edit(
 		HttpServletRequest request,
 		HttpServletResponse response
-	) {
-		//
+	) throws ServletException, IOException {
+		String idStr = request.getParameter("id");
+		int id = Integer.parseInt(idStr);
+		User entity = this.userDAO.findById(id);
+		request.setAttribute("user", entity);
+		request.setAttribute("view", "/views/admin/users/edit.jsp");
+		request.getRequestDispatcher("/views/layout.jsp")
+		.forward(request, response);
 	}
 	
 	private void delete(
@@ -98,7 +104,13 @@ public class QLUserServlert extends HttpServlet {
 	) throws IOException {
 		int id = Integer.parseInt( request.getParameter("id") );
 		User entity = this.userDAO.findById(id);
-		this.userDAO.delete(entity);
+		try {
+			this.userDAO.delete(entity);
+			// TODO: Thông báo thành công
+		} catch (Exception e) {
+			// TODO: Thông báo lỗi
+			e.printStackTrace();
+		}
 
 		response.sendRedirect("/SP22B2_SOF3011_IT16308/users/index");
 	}
@@ -118,6 +130,26 @@ public class QLUserServlert extends HttpServlet {
 				+ "/users/index");
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+	
+	private void update(
+		HttpServletRequest request,
+		HttpServletResponse response
+	) throws IOException {
+		try {
+			User entity = new User();
+			BeanUtils.populate(entity,
+				request.getParameterMap());
+
+			User oldUser = this.userDAO.findById(entity.getId());
+			entity.setPassword(oldUser.getPassword());
+			this.userDAO.update(entity);
+			response.sendRedirect("/SP22B2_SOF3011_IT16308/users/index");
+		} catch (Exception e) {
+			e.printStackTrace();
+			String id = request.getParameter("id");
+			response.sendRedirect("/SP22B2_SOF3011_IT16308/users/edit?id=" + id);
 		}
 	}
 }

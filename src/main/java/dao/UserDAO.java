@@ -51,6 +51,18 @@ public class UserDAO {
 			throw e;
 		}
 	}
+	
+	public void update(User entity) throws Exception {
+		try {
+			this.em.getTransaction().begin();
+			this.em.merge(entity);
+			this.em.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			this.em.getTransaction().rollback();
+			throw e;
+		}
+	}
 
 	public User findById(int id) {
 		return this.em.find(User.class, id);
