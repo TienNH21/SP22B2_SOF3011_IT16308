@@ -20,6 +20,12 @@ public class Category implements Serializable {
 
 	private String name;
 
+	@ManyToOne()
+	@JoinColumn(
+		name="user_id"
+	)
+	private User user;
+
 	public Category() {
 	}
 
@@ -39,4 +45,13 @@ public class Category implements Serializable {
 		this.name = name;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	
 }

@@ -22,7 +22,7 @@ public class UserDAO {
 			
 			// Thêm mới đối tượng
 			this.em.persist(entity);
-			
+			this.em.flush();
 			// Kết thúc transaction
 			this.em.getTransaction().commit();
 			return entity;
