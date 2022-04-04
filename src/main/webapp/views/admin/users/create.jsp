@@ -1,5 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java"
+	contentType="text/html; charset=UTF-8"
+	session="true"
     pageEncoding="UTF-8"%>
+    
+<%@taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>    
+<c:if test="${ !empty sessionScope.error }">
+	<div class="alert alert-danger">
+		${ sessionScope.error }
+	</div>
+	<c:remove var="error" scope="session" ></c:remove>
+</c:if>
 <form method="POST"
 		action="/SP22B2_SOF3011_IT16308/users/store">
 		<div>
