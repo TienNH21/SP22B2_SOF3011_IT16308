@@ -9,4 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- https://stackoverflow.com/a/6561816 -->
+  <filter-mapping>
+    <filter-name>authen_filter</filter-name>
+    <url-pattern />
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>admin_filter</filter-name>
+    <url-pattern />
+  </filter-mapping>
 </web-app>
